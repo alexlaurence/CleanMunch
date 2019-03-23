@@ -3,8 +3,9 @@ In Scotland, restaurants are mandated by law to display their food hygiene ratin
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/alexlaurence/CleanMunch/master/galaxy-s9-mockup-template-against-transparent-background-a19508.png" data-canonical-src="https://raw.githubusercontent.com/alexlaurence/CleanMunch/master/galaxy-s9-mockup-template-against-transparent-background-a19508.png" width="35%"/>
-  Scores as seen in screenshot are correct as of 22/03/2019 but may have changed since. Please use the CleanMunch app or ratings.food.gov.uk for the latest hygiene ratings.
 </p>
+
+Scores as seen in screenshot are correct as of 22/03/2019 but may have changed since. Please use the CleanMunch app or ratings.food.gov.uk for the latest hygiene ratings.
 
 ## Getting Started
 ## API
