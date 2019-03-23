@@ -23,7 +23,7 @@ Scores as seen in screenshot are correct as of 22/03/2019 but may have changed s
 - Open Government Licensing (http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
 ### Terms and Conditions
 
-We are not responsible for the contents or reliability of external websites or services and does not necessarily endorse the views expressed within them. Links to external sites should not be taken as endorsement of any kind. We cannot guarantee that these links will work all of the time and we have no control over the availability of the linked pages.
+Celestial Interactive (Alexander Laurence) is not responsible for the contents or reliability of external websites or services and does not necessarily endorse the views expressed within them. Links to external sites should not be taken as endorsement of any kind. We cannot guarantee that these links will work all of the time and we have no control over the availability of the linked pages.
 
 You must obtain permission if you intend to use our logo. The copying and use of the CleanMunch logo and other Celestial Interactive-related logos is not permitted without approval of Celestial Interactive.
 
@@ -35,4 +35,4 @@ The ratings are subject to change as they are regularly updated to reflect the s
 
 Every effort is made to ensure that the information provided on this site is accurate and up to date, but no legal responsibility is accepted for any errors, omissions or misleading statements.
 
-It is the Food Standards Agency's policy to obtain permission to link to other web sites, and contextual links are provided to such sites where appropriate to Food Standards Agency business. Alexander Laurence is not responsible for, and cannot guarantee the accuracy of, information on sites that he does not manage; nor should the inclusion of a hyperlink be taken to mean endorsement by Celestial Interactive of the site to which it points.
+It is the Food Standards Agency's policy to obtain permission to link to other web sites, and contextual links are provided to such sites where appropriate to Food Standards Agency business. Celestial Interative is not responsible for, and cannot guarantee the accuracy of, information on sites that it does not manage; nor should the inclusion of a hyperlink be taken to mean endorsement by Celestial Interactive of the site to which it points.
