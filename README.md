@@ -29,7 +29,7 @@ You must obtain permission if you intend to use our logo. The copying and use of
 
 The data featured on this app is subject to Crown copyright protection unless otherwise indicated. CleanMunch ('the app') itself, not including the FSA data featured on the app, is subject to copyright protection.
 
-The use of proprietary food hygiene ratings information and services is subject to the terms of the Open Government Licence (OGL).
+The use of proprietary food hygiene ratings information and services is subject to the terms of the Open Government Licence (OGL). The source code of the app from Celestial Interactive is subject to the terms of the GNU General Public License v3.0.
 
 The ratings are subject to change as they are regularly updated to reflect the standards found when a business is inspected by a local authority food safety officer. Users are reminded that displaying or otherwise using an invalid or inaccurate rating may constitute a criminal offence and/or expose the user to potential civil liability. It is the responsibility of users to ensure that the current rating is used or to indicate the date when the information was updated.
 
