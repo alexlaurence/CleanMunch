@@ -27,7 +27,7 @@ Celestial Interactive (Alexander Laurence) is not responsible for the contents o
 
 You must obtain permission if you intend to use our logo. The copying and use of the CleanMunch logo and other Celestial Interactive-related logos is not permitted without approval of Celestial Interactive.
 
-The data featured on this app is subject to Crown copyright protection unless otherwise indicated.
+The data featured on this app is subject to Crown copyright protection unless otherwise indicated. CleanMunch ('the app') itself, not including the FSA data featured on the app, is subject to copyright protection.
 
 The use of proprietary food hygiene ratings information and services is subject to the terms of the Open Government Licence (OGL).
 
