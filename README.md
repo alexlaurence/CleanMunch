@@ -20,9 +20,10 @@ Scores as seen in screenshot are correct as of 22/03/2019 but may have changed s
 
 ## Legal
 ### Licensing
-- Open Government Licensing (http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
-### Terms and Conditions
+- [Open Government Licensing](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
+- [GNU General Public License v3.0](https://github.com/alexlaurence/CleanMunch/blob/master/LICENSE)
 
+### Terms and Conditions
 Celestial Interactive (Alexander Laurence) is not responsible for the contents or reliability of external websites or services and does not necessarily endorse the views expressed within them. Links to external sites should not be taken as endorsement of any kind. We cannot guarantee that these links will work all of the time and we have no control over the availability of the linked pages.
 
 You must obtain permission if you intend to use our logo. The copying and use of the CleanMunch logo and other Celestial Interactive-related logos is not permitted without approval of Celestial Interactive.
