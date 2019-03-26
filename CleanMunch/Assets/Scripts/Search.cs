@@ -4,12 +4,11 @@ using UnityEditor;
 using Models;
 using Proyecto26;
 using System.Collections;
-using DeadMosquito.AndroidGoodies;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Search : MonoBehaviour
 {
-
     [SerializeField]
     private Text FirstResult;
     [SerializeField]
@@ -35,15 +34,23 @@ public class Search : MonoBehaviour
     [SerializeField]
     private Text PageText;
     [SerializeField]
+    private GameObject PageTextObj;
+    [SerializeField]
     private GameObject OutputText;
     [SerializeField]
     private Text OutputTextResult;
     [SerializeField]
     private GameObject Loading;
     [SerializeField]
-    private GameObject NextButton;
+    private GameObject NextButtonSearch;
     [SerializeField]
-    private GameObject PreviousButton;
+    private GameObject PreviousButtonSearch;
+    [SerializeField]
+    private GameObject NextButtonLocation;
+    [SerializeField]
+    private GameObject PreviousButtonLocation;
+    [SerializeField]
+    private Text ResultInfo;
 
     private int CurrentPage = 1;
     private bool FirstPage;
@@ -68,24 +75,34 @@ public class Search : MonoBehaviour
         FifthPanel.SetActive(false);
         OutputText.SetActive(true);
         Loading.SetActive(false);
-        PreviousButton.SetActive(false);
-        NextButton.SetActive(false);
+        PreviousButtonSearch.SetActive(false);
+        NextButtonSearch.SetActive(false);
+        PreviousButtonLocation.SetActive(false);
+        NextButtonLocation.SetActive(false);
+        PageTextObj.SetActive(false);
 
         OutputTextResult.text = "Search for a business name";
     }
 
     public void ClickLocation() 
     {
+        CurrentPage = 1;
         FirstPanel.SetActive(false);
         SecondPanel.SetActive(false);
         ThirdPanel.SetActive(false);
         FourthPanel.SetActive(false);
         FifthPanel.SetActive(false);
-        PreviousButton.SetActive(false);
-        NextButton.SetActive(false);
         OutputText.SetActive(false);
         Loading.SetActive(false);
+
+
+        PreviousButtonSearch.SetActive(false);
+        NextButtonSearch.SetActive(false);
+        PreviousButtonLocation.SetActive(false);
+        NextButtonLocation.SetActive(false);
+
         LocationClicked = true;
+        SearchClicked = false;
         try
         {
             //Ask for Permission
@@ -100,6 +117,7 @@ public class Search : MonoBehaviour
         {
             Loading.SetActive(false);
             OutputText.SetActive(true);
+            PageTextObj.SetActive(false);
             OutputTextResult.text = "Failed to determine location";
         }
     }
@@ -113,8 +131,10 @@ public class Search : MonoBehaviour
         FifthPanel.SetActive(false);
         OutputText.SetActive(false);
         Loading.SetActive(false);
-        PreviousButton.SetActive(false);
-        NextButton.SetActive(false);
+        PreviousButtonSearch.SetActive(false);
+        NextButtonSearch.SetActive(false);
+        PreviousButtonLocation.SetActive(false);
+        NextButtonLocation.SetActive(false);
         Loading.SetActive(true);
 
         // First, check if user has location service enabled
@@ -122,6 +142,7 @@ public class Search : MonoBehaviour
         {
             OutputText.SetActive(true);
             Loading.SetActive(false);
+            PageTextObj.SetActive(false);
             OutputTextResult.text = "Location not enabled";
             yield break;
         }
@@ -143,6 +164,7 @@ public class Search : MonoBehaviour
         {
             Loading.SetActive(false);
             OutputText.SetActive(true);
+            PageTextObj.SetActive(false);
             OutputTextResult.text = "Timed out";
             yield break;
         }
@@ -152,20 +174,14 @@ public class Search : MonoBehaviour
         {
             Loading.SetActive(false);
             OutputText.SetActive(true);
+            PageTextObj.SetActive(false);
             OutputTextResult.text = "Connection failed";
             yield break;
         }
         // Access granted and location value could be retrieved
         else
         {
-            Loading.SetActive(false);
             OutputText.SetActive(false);
-
-            if (LocationClicked == true)
-            {
-                //Go to first page
-                CurrentPage = 1;
-            }
 
             //We can add default request headers for all requests
             RestClient.DefaultRequestHeaders["Authorization"] = "Bearer ...";
@@ -183,9 +199,11 @@ public class Search : MonoBehaviour
                 switch (response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail.Count)
                 {
                     case 0:
+                        Loading.SetActive(false);
                         Debug.Log("No Results!");
                         OutputText.SetActive(true);
                         OutputTextResult.text = "No results found...";
+                        PageTextObj.SetActive(false);
                         PageText.text = "Page 1 of 1";
                         FirstPanel.SetActive(false);
                         SecondPanel.SetActive(false);
@@ -194,8 +212,10 @@ public class Search : MonoBehaviour
                         FifthPanel.SetActive(false);
                         break;
                     case 1:
+                        Loading.SetActive(false);
                         Debug.Log("1 Result!");
                         OutputText.SetActive(false);
+                        PageTextObj.SetActive(true);
                         PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                         FirstPanel.SetActive(true);
                         SecondPanel.SetActive(false);
@@ -206,8 +226,10 @@ public class Search : MonoBehaviour
                         FirstResult.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].BusinessName + " (" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].RatingValue + ")";
                         break;
                     case 2:
+                        Loading.SetActive(false);
                         Debug.Log("2 Results!");
                         OutputText.SetActive(false);
+                        PageTextObj.SetActive(true);
                         PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                         FirstPanel.SetActive(true);
                         SecondPanel.SetActive(true);
@@ -219,8 +241,10 @@ public class Search : MonoBehaviour
                         SecondResult.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].BusinessName + " (" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].RatingValue + ")";
                         break;
                     case 3:
+                        Loading.SetActive(false);
                         Debug.Log("3 Results!");
                         OutputText.SetActive(false);
+                        PageTextObj.SetActive(true);
                         PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                         FirstPanel.SetActive(true);
                         SecondPanel.SetActive(true);
@@ -233,8 +257,10 @@ public class Search : MonoBehaviour
                         ThirdResult.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].BusinessName + " (" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].RatingValue + ")";
                         break;
                     case 4:
+                        Loading.SetActive(false);
                         Debug.Log("4 Results!");
                         OutputText.SetActive(false);
+                        PageTextObj.SetActive(true);
                         PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                         FirstPanel.SetActive(true);
                         SecondPanel.SetActive(true);
@@ -248,8 +274,10 @@ public class Search : MonoBehaviour
                         FourthResult.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].BusinessName + " (" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].RatingValue + ")";
                         break;
                     case 5:
+                        Loading.SetActive(false);
                         Debug.Log(response.FHRSEstablishment.Header.ItemCount + " Results!");
                         OutputText.SetActive(false);
+                        PageTextObj.SetActive(true);
                         PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                         FirstPanel.SetActive(true);
                         SecondPanel.SetActive(true);
@@ -273,8 +301,8 @@ public class Search : MonoBehaviour
                     OnlyPage = false;
                     Debug.Log("This is the first page!");
 
-                    PreviousButton.SetActive(false);
-                    NextButton.SetActive(true);
+                    PreviousButtonLocation.SetActive(false);
+                    NextButtonLocation.SetActive(true);
                     //Page x of y, x ≠ y
                 }
                 else if (!(CurrentPage == System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount)))
@@ -283,8 +311,8 @@ public class Search : MonoBehaviour
                     LastPage = false;
                     OnlyPage = false;
 
-                    PreviousButton.SetActive(true);
-                    NextButton.SetActive(true);
+                    PreviousButtonLocation.SetActive(true);
+                    NextButtonLocation.SetActive(true);
                 }  //If we reached the last page
                 else if (CurrentPage == System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount) && (CurrentPage > 1))
                 {
@@ -292,8 +320,8 @@ public class Search : MonoBehaviour
                     FirstPage = false;
                     Debug.Log("This is the last page!");
 
-                    PreviousButton.SetActive(true);
-                    NextButton.SetActive(false);
+                    PreviousButtonLocation.SetActive(true);
+                    NextButtonLocation.SetActive(false);
                 }
                 //If this is the only page
                 if ((System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount) == 1) && (CurrentPage == 1))
@@ -303,35 +331,22 @@ public class Search : MonoBehaviour
                     OnlyPage = true;
                     Debug.Log("This is the only page!");
 
-                    PreviousButton.SetActive(false);
-                    NextButton.SetActive(false);
+                    PreviousButtonLocation.SetActive(false);
+                    NextButtonLocation.SetActive(false);
                 }
-                //reset bool
-                LocationClicked = false;
-
             })
             #if UNITY_EDITOR
             .Catch(err =>
             EditorUtility.DisplayDialog("Error", err.Message, "Ok"))
             #endif
             ;
-
         }
-
         // Stop service if there is no need to query location updates continuously
         Input.location.Stop();
     }
 
-
-
     public void Get()
     {
-        if (SearchClicked == true)
-        {
-            //Go to first page
-            CurrentPage = 1;
-        }
-
         //We can add default request headers for all requests
         RestClient.DefaultRequestHeaders["Authorization"] = "Bearer ...";
                 
@@ -357,6 +372,7 @@ public class Search : MonoBehaviour
                     Debug.Log("No Results!");
                     OutputText.SetActive(true);
                     OutputTextResult.text = "No results found...";
+                    PageTextObj.SetActive(false);
                     PageText.text = "Page 1 of 1";
                     FirstPanel.SetActive(false);
                     SecondPanel.SetActive(false);
@@ -367,6 +383,7 @@ public class Search : MonoBehaviour
                 case 1:
                     Debug.Log("1 Result!");
                     OutputText.SetActive(false);
+                    PageTextObj.SetActive(true);
                     PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                     FirstPanel.SetActive(true);
                     SecondPanel.SetActive(false);
@@ -379,6 +396,7 @@ public class Search : MonoBehaviour
                 case 2:
                     Debug.Log("2 Results!");
                     OutputText.SetActive(false);
+                    PageTextObj.SetActive(true);
                     PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                     FirstPanel.SetActive(true);
                     SecondPanel.SetActive(true);
@@ -392,6 +410,7 @@ public class Search : MonoBehaviour
                 case 3:
                     Debug.Log("3 Results!");
                     OutputText.SetActive(false);
+                    PageTextObj.SetActive(true);
                     PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                     FirstPanel.SetActive(true);
                     SecondPanel.SetActive(true);
@@ -406,6 +425,7 @@ public class Search : MonoBehaviour
                 case 4:
                     Debug.Log("4 Results!");
                     OutputText.SetActive(false);
+                    PageTextObj.SetActive(true);
                     PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                     FirstPanel.SetActive(true);
                     SecondPanel.SetActive(true);
@@ -421,6 +441,7 @@ public class Search : MonoBehaviour
                 case 5:
                     Debug.Log(response.FHRSEstablishment.Header.ItemCount + " Results!");
                     OutputText.SetActive(false);
+                    PageTextObj.SetActive(true);
                     PageText.text = "Page " + CurrentPage + " of " + response.FHRSEstablishment.Header.PageCount;
                     FirstPanel.SetActive(true);
                     SecondPanel.SetActive(true);
@@ -444,24 +465,24 @@ public class Search : MonoBehaviour
                 OnlyPage = false;
                 Debug.Log("This is the first page!");
 
-                PreviousButton.SetActive(false);
-                NextButton.SetActive(true);
+                PreviousButtonSearch.SetActive(false);
+                NextButtonSearch.SetActive(true);
             //Page x of y, x ≠ y
             } else if (!(CurrentPage == System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount))) {
                 FirstPage = false;
                 LastPage = false;
                 OnlyPage = false;
 
-                PreviousButton.SetActive(true);
-                NextButton.SetActive(true);
+                PreviousButtonSearch.SetActive(true);
+                NextButtonSearch.SetActive(true);
             }  //If we reached the last page
             else if (CurrentPage == System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount) && (CurrentPage > 1)) {
                 LastPage = true;
                 FirstPage = false;
                 Debug.Log("This is the last page!");
 
-                PreviousButton.SetActive(true);
-                NextButton.SetActive(false);
+                PreviousButtonSearch.SetActive(true);
+                NextButtonSearch.SetActive(false);
             }
             //If this is the only page
             if ((System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount) == 1) && (CurrentPage == 1))
@@ -471,12 +492,9 @@ public class Search : MonoBehaviour
                 OnlyPage = true;
                 Debug.Log("This is the only page!");
 
-                PreviousButton.SetActive(false);
-                NextButton.SetActive(false);
+                PreviousButtonSearch.SetActive(false);
+                NextButtonSearch.SetActive(false);
             }
-            //reset bool
-            SearchClicked = false;
-
             })
             #if UNITY_EDITOR
             .Catch(err =>
@@ -498,12 +516,14 @@ public class Search : MonoBehaviour
     {
         if (!(inputbox.text == "")) 
         {
+            CurrentPage = 1;
             SearchClicked = true;
+            LocationClicked = false;
             Get();
         }
     }
 
-    public void NextPage()
+    public void NextPageSearch()
     {
         //Make sure nothing accidentally typed in there will affect the result
         inputbox.text = PlayerPrefs.GetString("Query");
@@ -516,7 +536,7 @@ public class Search : MonoBehaviour
         }
     }
 
-    public void PreviousPage()
+    public void PreviousPageSearch()
     {
         //Make sure nothing accidentally typed in there will affect the result
         inputbox.text = PlayerPrefs.GetString("Query");
@@ -528,4 +548,257 @@ public class Search : MonoBehaviour
             Debug.Log("You are on page " + CurrentPage);
         }
     }
+
+    public void NextPageLocation()
+    {
+        if (LastPage == false && OnlyPage == false)
+        {
+            CurrentPage++;
+            GetLocation();
+            Debug.Log("You are on page " + CurrentPage);
+        }
+    }
+
+    public void PreviousPageLocation()
+    {
+        if (FirstPage == false && OnlyPage == false)
+        {
+            CurrentPage--;
+            GetLocation();
+            Debug.Log("You are on page " + CurrentPage);
+        }
+    }
+
+    #region result buttons
+    public void ResultClick1()
+    {
+        if (SearchClicked == true)
+            RestClient.Get<RootObject>(basePath + "search/" + inputbox.text + "/^/" + CurrentPage + "/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].LocalAuthorityEmailAddress;
+            });
+        else if (LocationClicked == true)
+            RestClient.Get<RootObject>(basePath + "/enhanced-search/en-GB/^/^/DISTANCE/0/^/" + Convert.ToString(Input.location.lastData.longitude) + "/" + Convert.ToString(Input.location.lastData.latitude) + "/1/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].LocalAuthorityEmailAddress;
+            });
+
+    }
+
+    public void ResultClick2()
+    {
+        if (SearchClicked == true)
+            RestClient.Get<RootObject>(basePath + "search/" + inputbox.text + "/^/" + CurrentPage + "/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].LocalAuthorityEmailAddress;
+            });
+        else if (LocationClicked == true)
+            RestClient.Get<RootObject>(basePath + "/enhanced-search/en-GB/^/^/DISTANCE/0/^/" + Convert.ToString(Input.location.lastData.longitude) + "/" + Convert.ToString(Input.location.lastData.latitude) + "/1/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[1].LocalAuthorityEmailAddress;
+            });
+    }
+
+    public void ResultClick3()
+    {
+        if (SearchClicked == true)
+            RestClient.Get<RootObject>(basePath + "search/" + inputbox.text + "/^/" + CurrentPage + "/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].LocalAuthorityEmailAddress;
+            });
+        else if (LocationClicked == true)
+            RestClient.Get<RootObject>(basePath + "/enhanced-search/en-GB/^/^/DISTANCE/0/^/" + Convert.ToString(Input.location.lastData.longitude) + "/" + Convert.ToString(Input.location.lastData.latitude) + "/1/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[2].LocalAuthorityEmailAddress;
+            });
+    }
+
+    public void ResultClick4()
+    {
+        if (SearchClicked == true)
+            RestClient.Get<RootObject>(basePath + "search/" + inputbox.text + "/^/" + CurrentPage + "/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].LocalAuthorityEmailAddress;
+            });
+        else if (LocationClicked == true)
+            RestClient.Get<RootObject>(basePath + "/enhanced-search/en-GB/^/^/DISTANCE/0/^/" + Convert.ToString(Input.location.lastData.longitude) + "/" + Convert.ToString(Input.location.lastData.latitude) + "/1/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[3].LocalAuthorityEmailAddress;
+            });
+    }
+
+    public void ResultClick5()
+    {
+        if (SearchClicked == true)
+            RestClient.Get<RootObject>(basePath + "search/" + inputbox.text + "/^/" + CurrentPage + "/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].LocalAuthorityEmailAddress;
+            });
+        else if (LocationClicked == true)
+            RestClient.Get<RootObject>(basePath + "/enhanced-search/en-GB/^/^/DISTANCE/0/^/" + Convert.ToString(Input.location.lastData.longitude) + "/" + Convert.ToString(Input.location.lastData.latitude) + "/1/5/json").Then(EstablishmentDetail =>
+            {
+                string jsonResult = JsonUtility.ToJson(EstablishmentDetail, true);
+                RootObject response = JsonUtility.FromJson<RootObject>(jsonResult);
+
+                ResultInfo.text = response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].BusinessName
+                + "\nID: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].FHRSID
+                + "\nType: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].BusinessType
+                + "\n"
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].AddressLine1
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].AddressLine2
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].AddressLine3
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].AddressLine4
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].PostCode
+                + "\n"
+                + "\nRating: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].RatingValue
+                + "\nRating Date: " + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].RatingDate
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].LocalAuthorityName
+                + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[4].LocalAuthorityEmailAddress;
+            });
+    }
+    #endregion
 }
