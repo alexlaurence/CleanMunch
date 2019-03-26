@@ -5,6 +5,8 @@ In Scotland, restaurants are mandated by law to display their food hygiene ratin
 <img src="https://raw.githubusercontent.com/alexlaurence/CleanMunch/master/galaxy-s9-mockup-template-against-transparent-background-a19508.png" data-canonical-src="https://raw.githubusercontent.com/alexlaurence/CleanMunch/master/galaxy-s9-mockup-template-against-transparent-background-a19508.png" width="35%"/>
 </p>
 
+Scores as seen in screenshot are correct as of 22/03/2019 but may have changed since. Please use the CleanMunch app or ratings.food.gov.uk for the latest hygiene ratings.
+
 ## Getting Started
 ## API
 - As provided by the Food Standards Agency (http://api.ratings.food.gov.uk)
@@ -17,5 +19,21 @@ In Scotland, restaurants are mandated by law to display their food hygiene ratin
 - Android Plugin: [UnityAndroidPermissions](https://github.com/Over17/UnityAndroidPermissions)
 
 ## Legal
-- Open Government Licensing (http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
-- Terms and Conditions (Coming soon)
+### Licensing
+- [Open Government Licensing](http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
+- [GNU General Public License v3.0](https://github.com/alexlaurence/CleanMunch/blob/master/LICENSE)
+
+### Terms and Conditions
+Celestial Interactive (Alexander Laurence) is not responsible for the contents or reliability of external websites or services and does not necessarily endorse the views expressed within them. Links to external sites should not be taken as endorsement of any kind. We cannot guarantee that these links will work all of the time and we have no control over the availability of the linked pages.
+
+You must obtain permission if you intend to use our logo. The copying and use of the CleanMunch logo and other Celestial Interactive-related logos is not permitted without approval of Celestial Interactive.
+
+The data featured on this app is subject to Crown copyright protection unless otherwise indicated. CleanMunch ('the app') itself, not including the FSA data featured on the app, is subject to copyright protection.
+
+The use of proprietary food hygiene ratings information and services is subject to the terms of the Open Government Licence (OGL). The source code of the app from Celestial Interactive is subject to the terms of the GNU General Public License v3.0.
+
+The ratings are subject to change as they are regularly updated to reflect the standards found when a business is inspected by a local authority food safety officer. Users are reminded that displaying or otherwise using an invalid or inaccurate rating may constitute a criminal offence and/or expose the user to potential civil liability. It is the responsibility of users to ensure that the current rating is used or to indicate the date when the information was updated.
+
+Every effort is made to ensure that the information provided on this site is accurate and up to date, but no legal responsibility is accepted for any errors, omissions or misleading statements.
+
+It is the Food Standards Agency's policy to obtain permission to link to other web sites, and contextual links are provided to such sites where appropriate to Food Standards Agency business. Celestial Interative is not responsible for, and cannot guarantee the accuracy of, information on sites that it does not manage; nor should the inclusion of a hyperlink be taken to mean endorsement by Celestial Interactive of the site to which it points.
