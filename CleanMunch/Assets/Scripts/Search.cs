@@ -5,7 +5,6 @@ using Models;
 using Proyecto26;
 using System.Collections;
 using System;
-using UnityEngine.SceneManagement;
 
 public class Search : MonoBehaviour
 {
@@ -42,13 +41,9 @@ public class Search : MonoBehaviour
     [SerializeField]
     private GameObject Loading;
     [SerializeField]
-    private GameObject NextButtonSearch;
+    private GameObject NextButton;
     [SerializeField]
-    private GameObject PreviousButtonSearch;
-    [SerializeField]
-    private GameObject NextButtonLocation;
-    [SerializeField]
-    private GameObject PreviousButtonLocation;
+    private GameObject PreviousButton;
     [SerializeField]
     private Text ResultInfo;
 
@@ -75,10 +70,8 @@ public class Search : MonoBehaviour
         FifthPanel.SetActive(false);
         OutputText.SetActive(true);
         Loading.SetActive(false);
-        PreviousButtonSearch.SetActive(false);
-        NextButtonSearch.SetActive(false);
-        PreviousButtonLocation.SetActive(false);
-        NextButtonLocation.SetActive(false);
+        PreviousButton.SetActive(false);
+        NextButton.SetActive(false);
         PageTextObj.SetActive(false);
 
         OutputTextResult.text = "Search for a business name";
@@ -95,14 +88,15 @@ public class Search : MonoBehaviour
         OutputText.SetActive(false);
         Loading.SetActive(false);
 
-
-        PreviousButtonSearch.SetActive(false);
-        NextButtonSearch.SetActive(false);
-        PreviousButtonLocation.SetActive(false);
-        NextButtonLocation.SetActive(false);
+        PreviousButton.SetActive(false);
+        NextButton.SetActive(false);
 
         LocationClicked = true;
         SearchClicked = false;
+        FirstPage = true;
+        LastPage = false;
+        OnlyPage = false;
+
         try
         {
             //Ask for Permission
@@ -124,6 +118,7 @@ public class Search : MonoBehaviour
    
     private IEnumerator GetLocation()
     {
+
         FirstPanel.SetActive(false);
         SecondPanel.SetActive(false);
         ThirdPanel.SetActive(false);
@@ -131,10 +126,8 @@ public class Search : MonoBehaviour
         FifthPanel.SetActive(false);
         OutputText.SetActive(false);
         Loading.SetActive(false);
-        PreviousButtonSearch.SetActive(false);
-        NextButtonSearch.SetActive(false);
-        PreviousButtonLocation.SetActive(false);
-        NextButtonLocation.SetActive(false);
+        PreviousButton.SetActive(false);
+        NextButton.SetActive(false);
         Loading.SetActive(true);
 
         // First, check if user has location service enabled
@@ -204,7 +197,7 @@ public class Search : MonoBehaviour
                         OutputText.SetActive(true);
                         OutputTextResult.text = "No results found...";
                         PageTextObj.SetActive(false);
-                        PageText.text = "Page 1 of 1";
+                        PageText.text = "";
                         FirstPanel.SetActive(false);
                         SecondPanel.SetActive(false);
                         ThirdPanel.SetActive(false);
@@ -301,8 +294,8 @@ public class Search : MonoBehaviour
                     OnlyPage = false;
                     Debug.Log("This is the first page!");
 
-                    PreviousButtonLocation.SetActive(false);
-                    NextButtonLocation.SetActive(true);
+                    PreviousButton.SetActive(false);
+                    NextButton.SetActive(true);
                     //Page x of y, x ≠ y
                 }
                 else if (!(CurrentPage == System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount)))
@@ -311,8 +304,8 @@ public class Search : MonoBehaviour
                     LastPage = false;
                     OnlyPage = false;
 
-                    PreviousButtonLocation.SetActive(true);
-                    NextButtonLocation.SetActive(true);
+                    PreviousButton.SetActive(true);
+                    NextButton.SetActive(true);
                 }  //If we reached the last page
                 else if (CurrentPage == System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount) && (CurrentPage > 1))
                 {
@@ -320,8 +313,8 @@ public class Search : MonoBehaviour
                     FirstPage = false;
                     Debug.Log("This is the last page!");
 
-                    PreviousButtonLocation.SetActive(true);
-                    NextButtonLocation.SetActive(false);
+                    PreviousButton.SetActive(true);
+                    NextButton.SetActive(false);
                 }
                 //If this is the only page
                 if ((System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount) == 1) && (CurrentPage == 1))
@@ -331,8 +324,8 @@ public class Search : MonoBehaviour
                     OnlyPage = true;
                     Debug.Log("This is the only page!");
 
-                    PreviousButtonLocation.SetActive(false);
-                    NextButtonLocation.SetActive(false);
+                    PreviousButton.SetActive(false);
+                    NextButton.SetActive(false);
                 }
             })
             #if UNITY_EDITOR
@@ -373,7 +366,7 @@ public class Search : MonoBehaviour
                     OutputText.SetActive(true);
                     OutputTextResult.text = "No results found...";
                     PageTextObj.SetActive(false);
-                    PageText.text = "Page 1 of 1";
+                    PageText.text = "";
                     FirstPanel.SetActive(false);
                     SecondPanel.SetActive(false);
                     ThirdPanel.SetActive(false);
@@ -465,24 +458,24 @@ public class Search : MonoBehaviour
                 OnlyPage = false;
                 Debug.Log("This is the first page!");
 
-                PreviousButtonSearch.SetActive(false);
-                NextButtonSearch.SetActive(true);
+                PreviousButton.SetActive(false);
+                NextButton.SetActive(true);
             //Page x of y, x ≠ y
             } else if (!(CurrentPage == System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount))) {
                 FirstPage = false;
                 LastPage = false;
                 OnlyPage = false;
 
-                PreviousButtonSearch.SetActive(true);
-                NextButtonSearch.SetActive(true);
+                PreviousButton.SetActive(true);
+                NextButton.SetActive(true);
             }  //If we reached the last page
             else if (CurrentPage == System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount) && (CurrentPage > 1)) {
                 LastPage = true;
                 FirstPage = false;
                 Debug.Log("This is the last page!");
 
-                PreviousButtonSearch.SetActive(true);
-                NextButtonSearch.SetActive(false);
+                PreviousButton.SetActive(true);
+                NextButton.SetActive(false);
             }
             //If this is the only page
             if ((System.Convert.ToInt32(response.FHRSEstablishment.Header.PageCount) == 1) && (CurrentPage == 1))
@@ -492,8 +485,8 @@ public class Search : MonoBehaviour
                 OnlyPage = true;
                 Debug.Log("This is the only page!");
 
-                PreviousButtonSearch.SetActive(false);
-                NextButtonSearch.SetActive(false);
+                PreviousButton.SetActive(false);
+                NextButton.SetActive(false);
             }
             })
             #if UNITY_EDITOR
@@ -523,51 +516,55 @@ public class Search : MonoBehaviour
         }
     }
 
-    public void NextPageSearch()
+    public void NextPage()
     {
-        //Make sure nothing accidentally typed in there will affect the result
-        inputbox.text = PlayerPrefs.GetString("Query");
+        CurrentPage++;
+        Debug.Log("You are on page " + CurrentPage);
 
-        if (LastPage == false && OnlyPage == false)
+        if (SearchClicked == true)
         {
-            CurrentPage++;
-            Get();
-            Debug.Log("You are on page " + CurrentPage);
+            //Make sure nothing accidentally typed in there will affect the result
+            inputbox.text = PlayerPrefs.GetString("Query");
+
+            if (LastPage == false && OnlyPage == false)
+            {
+                Get();
+            }
+        }
+        else if (LocationClicked == true)
+        {
+            if (LastPage == false && OnlyPage == false)
+            {
+                StartCoroutine(GetLocation());
+            }
         }
     }
 
-    public void PreviousPageSearch()
+    public void PreviousPage()
     {
-        //Make sure nothing accidentally typed in there will affect the result
-        inputbox.text = PlayerPrefs.GetString("Query");
+        CurrentPage--;
+        Debug.Log("You are on page " + CurrentPage);
 
-        if (FirstPage == false && OnlyPage == false)
+        if (SearchClicked == true)
         {
-            CurrentPage--;
-            Get();
-            Debug.Log("You are on page " + CurrentPage);
+            //Make sure nothing accidentally typed in there will affect the result
+            inputbox.text = PlayerPrefs.GetString("Query");
+
+            if (LastPage == false && OnlyPage == false)
+            {
+                Get();
+            }
+        }
+        else if (LocationClicked == true)
+        {
+            if (LastPage == false && OnlyPage == false)
+            {
+                StartCoroutine(GetLocation());
+            }
         }
     }
 
-    public void NextPageLocation()
-    {
-        if (LastPage == false && OnlyPage == false)
-        {
-            CurrentPage++;
-            GetLocation();
-            Debug.Log("You are on page " + CurrentPage);
-        }
-    }
 
-    public void PreviousPageLocation()
-    {
-        if (FirstPage == false && OnlyPage == false)
-        {
-            CurrentPage--;
-            GetLocation();
-            Debug.Log("You are on page " + CurrentPage);
-        }
-    }
 
     #region result buttons
     public void ResultClick1()
@@ -614,7 +611,6 @@ public class Search : MonoBehaviour
                 + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].LocalAuthorityName
                 + "\n" + response.FHRSEstablishment.EstablishmentCollection.EstablishmentDetail[0].LocalAuthorityEmailAddress;
             });
-
     }
 
     public void ResultClick2()
