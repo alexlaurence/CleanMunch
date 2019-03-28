@@ -37,3 +37,8 @@ The ratings are subject to change as they are regularly updated to reflect the s
 Every effort is made to ensure that the information provided on this site is accurate and up to date, but no legal responsibility is accepted for any errors, omissions or misleading statements.
 
 It is the Food Standards Agency's policy to obtain permission to link to other web sites, and contextual links are provided to such sites where appropriate to Food Standards Agency business. Celestial Interative is not responsible for, and cannot guarantee the accuracy of, information on sites that it does not manage; nor should the inclusion of a hyperlink be taken to mean endorsement by Celestial Interactive of the site to which it points.
+
+
+### Privacy Policy
+
+CleanMunch does not store, track, collect, process, or exchange any user data. CleanMunch requests for your location in order to fulfil the geolocation feature. Cache may be stored locally on your device. Celestial Interactive does not, and will not have any access to this data.
