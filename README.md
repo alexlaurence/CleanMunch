@@ -1,5 +1,7 @@
 # CleanMunch
-In Scotland, restaurants are mandated by law to display their food hygiene rating. However, this is not the case in England, Wales, and Northern Ireland. Therefore, I made CleanMunch to help UK foodies eat at their favourite restaurants with a peace of mind knowing it has a good hygiene rating. Through the app users can check nearby restaurants for their 0-5 hygiene score. You can even search by restaurant name. Eat with confidence, find the cleanest restaurant, and force the industry to clean up its act!
+In Scotland, restaurants are mandated by law to display their food hygiene rating. However, this is not the case in England, Wales, and Northern Ireland. Therefore, I made CleanMunch to help UK foodies eat at their favourite restaurants with a peace of mind knowing it has a good hygiene rating. Through the app users can check nearby restaurants for their 0-5 hygiene score. You can even search by restaurant name. 
+
+Eat with confidence, find the cleanest restaurant, and force the industry to clean up its act!
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/alexlaurence/CleanMunch/master/galaxy-s9-mockup-template-against-transparent-background-a19508.png" data-canonical-src="https://raw.githubusercontent.com/alexlaurence/CleanMunch/master/galaxy-s9-mockup-template-against-transparent-background-a19508.png" width="35%"/>
