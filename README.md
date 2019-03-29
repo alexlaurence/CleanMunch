@@ -50,6 +50,6 @@ CleanMunch does not store, track, collect, process, or exchange any user data. C
 
 Your precise location is not shared with Celestial Interactive. The app just chooses the closest location where business information is available. This info is kept locally on your device only and therefore won’t be shared by Celestial Interactive to anyone. No other personal data relating to you will be sent to Celestial Interactive either.
 
-If you install this app you accept the our Terms of Use at https://alexlaurence.github.io/CleanMunch/. To read BBC’s Privacy Policy go to https://alexlaurence.github.io/CleanMunch/.
+If you install this app you accept the CleanMunch's Terms of Use at https://alexlaurence.github.io/CleanMunch/. To read CleanMunch’s Privacy Policy go to https://alexlaurence.github.io/CleanMunch/.
 
 If you don’t want the CleanMunch app to display geolocation information at your current location, just go to Settings>Apps>CleanMunch>Permissions>Locations, and select “off”.
