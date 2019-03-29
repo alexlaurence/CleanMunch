@@ -11,7 +11,7 @@ Scores as seen in screenshot are correct as of 22/03/2019 but may have changed s
 
 ## Getting Started
 ## API
-- As provided by the Food Standards Agency (http://api.ratings.food.gov.uk)
+- As provided by the [Food Standards Agency](http://api.ratings.food.gov.uk)
 
 ## Usage
 - Unity Engine
@@ -19,6 +19,9 @@ Scores as seen in screenshot are correct as of 22/03/2019 but may have changed s
 - HTTP and REST client for Unity: [RestClient for Unity](https://github.com/proyecto26/RestClient)
 - Promises library for C#: [Real Serious Games/C-Sharp-Promise](https://github.com/Real-Serious-Games/C-Sharp-Promise)
 - Android Plugin: [Android Runtime Permissions](https://github.com/yasirkula/UnityAndroidRuntimePermissions)
+
+## Release (UK Only)
+- [Google Play Store](https://play.google.com/store/apps/details?id=com.CelestialInteractive.CleanMunch)
 
 ## Legal
 ### Licensing
