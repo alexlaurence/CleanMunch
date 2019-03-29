@@ -48,9 +48,7 @@ It is the Food Standards Agency's policy to obtain permission to link to other w
 
 CleanMunch does not store, track, collect, process, or exchange any user data. CleanMunch requests for your location in order to fulfil the geolocation feature. Cache may be stored locally on your device. Celestial Interactive does not, and will not have any access to this data.
 
-Your precise location is not shared with Celestial Interactive. The app just chooses the closest location where business information is available.
-
-This info is kept anonymous, secure and we won’t share it with anyone. No other personal data relating to you will be sent to Celestial Interactive either.
+Your precise location is not shared with Celestial Interactive. The app just chooses the closest location where business information is available. This info is kept locally and therefore won’t be shared by Celestial Interactive to anyone. No other personal data relating to you will be sent to Celestial Interactive either.
 
 If you install this app you accept the our Terms of Use at https://alexlaurence.github.io/CleanMunch/. To read BBC’s Privacy Policy go to https://alexlaurence.github.io/CleanMunch/.
 
