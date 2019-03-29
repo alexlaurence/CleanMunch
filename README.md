@@ -18,7 +18,7 @@ Scores as seen in screenshot are correct as of 22/03/2019 but may have changed s
 - GUI: [Google Material Design](https://assetstore.unity.com/packages/tools/particles-effects/google-material-design-47141) / [UI Tween](https://assetstore.unity.com/packages/tools/animation/ui-tween-38583) / [UI Ripple](https://assetstore.unity.com/packages/tools/gui/uiripple-46243) / [Feather Icons](https://github.com/feathericons/feather) / [Material Design](https://material.io)
 - HTTP and REST client for Unity: [RestClient for Unity](https://github.com/proyecto26/RestClient)
 - Promises library for C#: [Real Serious Games/C-Sharp-Promise](https://github.com/Real-Serious-Games/C-Sharp-Promise)
-- Android Plugin: [UnityAndroidPermissions](https://github.com/Over17/UnityAndroidPermissions)
+- Android Plugin: [Android Runtime Permissions](https://github.com/yasirkula/UnityAndroidRuntimePermissions)
 
 ## Legal
 ### Licensing
